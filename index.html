@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <base href="/controle-camara-3d/"> <meta charset="UTF-8">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Secadora Filamento Pro</title>
+    <title>Controle de Câmara 3D</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="icons/icon-192.png">
-    <meta name="theme-color" content="#1b528f">
+    <meta name="theme-color" content="#0f1117">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -14,7 +15,7 @@
         * { box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', sans-serif;
-            background: #121212;
+            background: #0f1117;
             color: #E0E0E0;
             margin: 0;
             padding: 20px;
@@ -35,7 +36,7 @@
             color: #00E5FF;
             letter-spacing: 3px;
             margin: 0 0 8px 0;
-            font-size: 26px;
+            font-size: 24px;
         }
         .subtitulo {
             color: #aaa;
@@ -43,7 +44,7 @@
             margin-bottom: 10px;
         }
         .instrucao {
-            background: #1E1E1E;
+            background: #1E222B;
             border: 1px solid #333;
             border-radius: 12px;
             padding: 15px 20px;
@@ -93,26 +94,27 @@
 </head>
 <body>
 
-    <img src="icons/icon-192.png" class="logo" alt="Logo Secadora de Filamento">
-    <h1>DRYBOX 3D</h1>
-    <p class="subtitulo">Gerenciamento e Secagem de Filamentos</p>
+    <img src="icons/icon-192.png" class="logo" alt="Logo Câmara 3D">
+    <h1>CÂMARA 3D PRO</h1>
+    <p class="subtitulo">Controle Ativo de Temperatura</p>
 
     <div class="instrucao">
         <strong>Como usar:</strong><br>
-        1. <span>Instale</span> o app no seu celular<br>
-        2. Conecte no Wi-Fi <span>Nao cobicaras wifi</span><br>
-        3. Toque em <span>Acessar Secadora</span>
+        1. <span>Instale</span> este app no seu celular<br>
+        2. Certifique-se de estar na mesma rede local<br>
+        3. O monitoramento abaixo é atualizado via rede local.
     </div>
 
     <button id="btnInstalar" class="btn">📥 Instalar Aplicativo</button>
-    <button id="btnConectar" class="btn" onclick="entrarNoSecador()">🔌 Acessar Secadora</button>
+    <button id="btnConectar" class="btn" onclick="conectarControlador()">🔌 Abrir Painel Direto</button>
 
     <p class="status" id="statusSW">Carregando...</p>
 
     <script>
-        function entrarNoSecador() {
-            // Endereço mDNS atualizado para caixadefilamentos.local
-            window.location.href = "http://caixadefilamentos.local/";
+        const ESP_IP = "http://192.168.1.119";
+
+        function conectarControlador() {
+            window.location.href = ESP_IP + "/";
         }
 
         // Lógica de instalação do PWA
@@ -139,7 +141,7 @@
             deferredPrompt = null;
         });
 
-        // Registra o Service Worker
+        // Registra o Service Worker (carrega o arquivo sw.js ou service-worker.js)
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('service-worker.js')
                 .then(() => {
